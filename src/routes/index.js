@@ -1,9 +1,12 @@
 const { Router } = require('express');
 const router = Router();
 
-const { getTerremotos } = require('../controllers/index.controller')
+const { getTerremoto,createTerremoto } = require('../controllers/index.controller')
 
-router.get('/terremotos', getTerremotos);
+router.get('/earthquakes', getTerremoto);
+router.post('/earthquakes',createTerremoto);
+
+
 
 module.exports= router;
 

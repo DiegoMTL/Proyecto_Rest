@@ -1,6 +1,7 @@
 /*select * from terremoto;*/
 /*muestra datos de la tabla users*/
 
+
 CREATE DATABASE terremotos;
 //DOUBLE PRECISION
 CREATE TABLE terremoto(
