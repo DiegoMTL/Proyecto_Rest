@@ -3,7 +3,7 @@ const app = express();
 
 //middlewares funciones antes que lleguen a las rutas
 app.use(express.json()); //cada vez que desde una aplicacion cliente envie al servidor un dato en formato JSON el servidor lo traduce a un objeto JS
-app.use(express.urlencoded({extended: false})); //cada vez que desde una aplicacion cliente envie al servidor un dato en formato formulario el servidor lo traduce a un objeto JS
+app.use(express.urlencoded({extended: false}));
 
 //routes
 app.use(require('./routes/index'));
