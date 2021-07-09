@@ -34,6 +34,7 @@ async function scraping(){
     return data; 
 }
 
+
 const pool  = new Pool ({
     host: 'localhost', //servidor de postgress
     user: 'postgres', //usuario postgress

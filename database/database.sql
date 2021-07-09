@@ -3,7 +3,7 @@
 
 
 CREATE DATABASE terremotos;
-//DOUBLE PRECISION
+/*DOUBLE PRECISION*/
 CREATE TABLE terremoto(
     id SERIAL PRIMARY KEY,
     fecha text,
@@ -16,8 +16,8 @@ CREATE TABLE terremoto(
 /*referencia geografica*/
 
 INSERT INTO terremoto (fecha,latitud,longitud,profundidad,magnitud,referencia) VALUES
-    ('21/05/2021','5','4','3','2,233233233','1'), 
-    ('22/05/2021','5','4','3','2,233423423311','1');
+    ('21/05/2021','5','4','3','2.233233233','1'), 
+    ('22/05/2021','5','4','3','2.233423423311','1');
 
 
 /*('fecha','latitud','longitud','profundidad','magnitud','referenciaGeografica')*/
