@@ -1,3 +1,6 @@
+//Ejecucion continua: npm run dev
+//killall -9 node
+//ps ax
 const express = require('express');
 const app = express();
 
