@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 const request = require('request-promise');
 
 async function scraping(){
-    const data= [];
+    const data = [];
     const $ = await request({ //aqui tengo todo el documento
         uri: 'http://www.sismologia.cl/links/ultimos_sismos.html',
         transform: body => cheerio.load(body)
@@ -34,7 +34,6 @@ async function scraping(){
     return data; 
 }
 
-
 const pool  = new Pool ({
     host: 'localhost', //servidor de postgress
     user: 'postgres', //usuario postgress
@@ -45,18 +44,17 @@ const pool  = new Pool ({
 });
 
 const getTerremoto = async (req, res) => {
-    const sismos = [];
     /*const response = await pool.query('SELECT * FROM terremoto'); //consulta a la base de datos terremotos 
     console.log(response.rows); //impresion por consola
     res.status(200).json(response.rows); //impresion navegador para el estado 200
     console.log(req.body);
     res.send('Get Terremotos');*/
-    sismos = scraping();
+    data = await scraping();
+    console.log(data);
 };
 
 const createTerremoto = async (req,res)=>{
     const { fecha,latitud,longitud,profundidad,magnitud,referencia } = req.body;
-
     const response = await pool.query('INSERT INTO terremoto (fecha,latitud,longitud,profundidad,magnitud,referencia) VALUES ($1, $2, $3, $4, $5, $6)',[fecha,latitud,longitud,profundidad,magnitud,referencia]);
     //console.log(req.body); //Datos que una APP client 
     console.log(response); //impresion por consola
