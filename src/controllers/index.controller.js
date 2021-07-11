@@ -49,8 +49,10 @@ const getTerremoto = async (req, res) => {
     res.status(200).json(response.rows); //impresion navegador para el estado 200
     console.log(req.body);
     res.send('Get Terremotos');*/
-    data = await scraping();
-    console.log(data);
+    sismos = await scraping();
+    //console.log(sismos);
+    console.log("Sismos");
+    res.send(sismos)
 };
 
 const createTerremoto = async (req,res)=>{
