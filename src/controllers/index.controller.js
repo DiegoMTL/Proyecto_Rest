@@ -55,7 +55,6 @@ const getTerremoto = async (req, res) => {
     sismos = await scraping();
     //console.log(sismos);
     console.log("getSismos");
-    res.send('Get Sismos');
 };
 
 const createTerremoto = async (req,res)=>{
