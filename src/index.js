@@ -1,11 +1,18 @@
-//Ejecucion continua: npm run dev
-//killall -9 node
-//ps ax
 const express = require('express');
 const app = express();
 const jwt = require("jsonwebtoken");
 const cors = require('cors');
-const { data } = require('cheerio/lib/api/attributes');
+
+//middlewares funciones antes que lleguen a las rutas
+app.use(express.json()); //cada vez que desde una aplicacion cliente envie al servidor un dato en formato JSON el servidor lo traduce a un objeto JS
+app.use(express.urlencoded({extended: false}));
+app.use(cors()); //Utilizacion de cors
+app.use(require('./routes/index'));//routes
+app.get('/earthquakes', cors(corsOptions), (req, res) =>{
+    res.json({mensaje: 'ok'});
+});
+app.listen(3000);
+console.log('Server on port 3000');
 
 var whitelist = ['http://www.sismologia.cl/links/informate.html'];
 
@@ -18,18 +25,3 @@ var corsOptions = {
         }
     }    
 }
-
-//middlewares funciones antes que lleguen a las rutas
-app.use(express.json()); //cada vez que desde una aplicacion cliente envie al servidor un dato en formato JSON el servidor lo traduce a un objeto JS
-app.use(express.urlencoded({extended: false}));
-//app.use(cors()); //Utilizacion de cors
-
-//routes
-app.use(require('./routes/index'));
-
-app.get('/', cors(corsOptions), (req, res) =>{
-    res.json({mensaje: 'ok'});
-});
-
-app.listen(3000);
-console.log('Server on port 3000');

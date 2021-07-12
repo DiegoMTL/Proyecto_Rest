@@ -24,6 +24,14 @@ El desarrollo de este proyecto se realizo en Ubuntu 20.04 LTS.
 - src/controllers respuestas del servidor
 - src/routes es donde se contruyen las rutas
 
+## Compilacion con Nodemon 
+
+Compilacion continua: 
+- npm run dev
+Detener: 
+- killall -9 node
+- ps ax
+
 ## Ejecución 
 
     `node src/index.js`
