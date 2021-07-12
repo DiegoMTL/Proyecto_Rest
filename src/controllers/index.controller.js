@@ -1,10 +1,11 @@
 const { Pool } = require('pg');//manera para conectarnos a postgres
 const cheerio = require('cheerio');
 const request = require('request-promise');
+const jwt = require("jsonwebtoken");
 
 async function scraping(){
     const data = [];
-    const InsertSismo = 'INSERT INTO terremoto (fecha,latitud,longitud,profundidad,magnitud,referencia) VALUES ($1, $2, $3, $4, $5, $6)';
+    const InsertSismo = 'INSERT INTO sismos (id,fecha,latitud,longitud,profundidad,magnitud,referencia) VALUES ($1, $2, $3, $4, $5, $6, $7)';
     const $ = await request({ //aqui tengo todo el documento
         uri: 'http://www.sismologia.cl/links/ultimos_sismos.html',
         transform: body => cheerio.load(body)
@@ -27,14 +28,13 @@ async function scraping(){
                 magnitud:  parseFloat(mag.html()), //double
                 referencia: ref.html()
             };
-            //const response = await pool.query(InsertSismo,[S.fecha,S.latitud,S.longitud,S.profundidad,S.magnitud,S.referencia]);
+            pool.query(InsertSismo,[S.id,S.fecha,S.latitud,S.longitud,S.profundidad,S.magnitud,S.referencia]);
             //console.log(response); 
             data[i-1] = S;  
         }
     });
     //console.log(data);
     console.log("Scraping");
-    return data; 
 }
 
 const pool  = new Pool ({
@@ -47,14 +47,22 @@ const pool  = new Pool ({
 });
 
 const getTerremoto = async (req, res) => {
-    const SelectT = 'SELECT * FROM sismos';
-    const response = await pool.query(SelectT); //consulta a la base de datos terremotos 
-    console.log(response.rows); //impresion por consola
-    res.status(200).json(response.rows); //impresion navegador para el estado 200
-    console.log(req.body);
-    sismos = await scraping();
-    //console.log(sismos);
-    console.log("getSismos");
+
+    
+    jwt.verify(req.token, 'postgres', async (err, data) => {
+        if (err){
+            res.sendStatus(403);
+        }else{
+                const SelectT = 'SELECT * FROM sismos';
+                const response = await pool.query(SelectT); //consulta a la base de datos terremotos 
+                console.log(response.rows); //impresion por consola
+                res.status(200).json(response.rows); //impresion navegador para el estado 200
+                console.log(req.body);
+                sismos = await scraping();
+                //console.log(sismos);
+                console.log("getSismos");
+        }
+    });    
 };
 
 const createTerremoto = async (req,res)=>{
