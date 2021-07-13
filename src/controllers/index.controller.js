@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const { next } = require('cheerio/lib/api/traversing');
 const cron = require('node-cron');
 
+/**Funcion que Realiza el scraping a la pagina de sismologia, lee los datos y los almacena en la base de datos
+ */
 async function scraping(){
     /*Constantes*/
     const InsertSismo = 'INSERT INTO sismos (fecha,latitud,longitud,profundidad,magnitud,referencia) VALUES ($1, $2, $3, $4, $5, $6)';
@@ -50,7 +52,7 @@ const pool  = new Pool ({
     port: '5432' //puerto de postgress (se puede definir)
 
 });
-
+/*GET que llama a la funcion scraping y realiza una consulta a la base de datos*/
 const getTerremoto = async (req, res) => {
     jwt.verify(req.token, 'postgres', async (err, data) => {
         if (err){
@@ -71,7 +73,7 @@ const getTerremoto = async (req, res) => {
         }
     });    
 };
-
+/**POST para crear un usuario */
 const createUsuario = async (req,res)=>{
     const { nombre, apellido } = req.body;
     const user = { nombre, apellido};

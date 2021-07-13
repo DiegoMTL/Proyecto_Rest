@@ -35,3 +35,6 @@ Detener:
 ## Ejecución 
 
     `node src/index.js`
+
+## Detalles 
+Para ver los datos de la Base de datos, ejecutar dos veces un Get en la ruta /earthquakes
