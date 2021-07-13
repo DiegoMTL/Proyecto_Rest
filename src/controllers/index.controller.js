@@ -3,6 +3,7 @@ const cheerio = require('cheerio');
 const request = require('request-promise');
 const jwt = require("jsonwebtoken");
 const { next } = require('cheerio/lib/api/traversing');
+const cron = require('node-cron');
 
 async function scraping(){
     /*Constantes*/
@@ -55,11 +56,18 @@ const getTerremoto = async (req, res) => {
         if (err){
             res.sendStatus(403);
         }else{
+            console.log("getSismos");
             await scraping();
             const SelectT = 'SELECT * FROM sismos';
             const response = await pool.query(SelectT); //consulta a la base de datos terremotos
             res.json(response.rows);
-            console.log("getSismos");
+            cron.schedule("*/30 * * * *", async() => {
+                await scraping();
+                console.log("Cron");
+                const SelectT = 'SELECT * FROM sismos';
+                const response = await pool.query(SelectT); //consulta a la base de datos terremotos
+                res.json(response.rows);
+            });
         }
     });    
 };
