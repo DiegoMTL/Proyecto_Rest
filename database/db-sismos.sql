@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.7 (Ubuntu 12.7-0ubuntu0.20.04.1)
--- Dumped by pg_dump version 12.7 (Ubuntu 12.7-0ubuntu0.20.04.1)
+-- Dumped from database version 13.3 (Ubuntu 13.3-0ubuntu0.21.04.1)
+-- Dumped by pg_dump version 13.3 (Ubuntu 13.3-0ubuntu0.21.04.1)
 
--- Started on 2021-07-12 04:51:34 -04
+-- Started on 2021-07-12 20:59:22 -04
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,11 +19,11 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 3013 (class 1262 OID 16429)
+-- TOC entry 3038 (class 1262 OID 57372)
 -- Name: sismos; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE sismos WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'es_CL.UTF-8' LC_CTYPE = 'es_CL.UTF-8';
+CREATE DATABASE sismos WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'es_CL.UTF-8';
 
 
 ALTER DATABASE sismos OWNER TO postgres;
@@ -46,12 +46,12 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 202 (class 1259 OID 16430)
+-- TOC entry 201 (class 1259 OID 57398)
 -- Name: sismos; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.sismos (
-    id bigint NOT NULL,
+    id integer NOT NULL,
     fecha text NOT NULL,
     latitud double precision NOT NULL,
     longitud double precision NOT NULL,
@@ -64,38 +64,79 @@ CREATE TABLE public.sismos (
 ALTER TABLE public.sismos OWNER TO postgres;
 
 --
--- TOC entry 203 (class 1259 OID 16438)
--- Name: user; Type: TABLE; Schema: public; Owner: postgres
+-- TOC entry 200 (class 1259 OID 57396)
+-- Name: sismos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public."user" (
-    id bigint NOT NULL,
-    token text[] NOT NULL,
-    "user" text NOT NULL,
-    password text NOT NULL
+CREATE SEQUENCE public.sismos_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sismos_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3039 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: sismos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.sismos_id_seq OWNED BY public.sismos.id;
+
+
+--
+-- TOC entry 202 (class 1259 OID 57414)
+-- Name: usuario; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.usuario (
+    nombre text NOT NULL,
+    apellido text NOT NULL,
+    token text NOT NULL
 );
 
 
-ALTER TABLE public."user" OWNER TO postgres;
+ALTER TABLE public.usuario OWNER TO postgres;
 
 --
--- TOC entry 3006 (class 0 OID 16430)
--- Dependencies: 202
+-- TOC entry 2895 (class 2604 OID 57401)
+-- Name: sismos id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sismos ALTER COLUMN id SET DEFAULT nextval('public.sismos_id_seq'::regclass);
+
+
+--
+-- TOC entry 3031 (class 0 OID 57398)
+-- Dependencies: 201
 -- Data for Name: sismos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
 
 --
--- TOC entry 3007 (class 0 OID 16438)
--- Dependencies: 203
--- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
+-- TOC entry 3032 (class 0 OID 57414)
+-- Dependencies: 202
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2877 (class 2606 OID 16437)
+-- TOC entry 3040 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: sismos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.sismos_id_seq', 1, false);
+
+
+--
+-- TOC entry 2897 (class 2606 OID 57427)
 -- Name: sismos sismos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -104,15 +145,15 @@ ALTER TABLE ONLY public.sismos
 
 
 --
--- TOC entry 2879 (class 2606 OID 16445)
--- Name: user user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2899 (class 2606 OID 57421)
+-- Name: usuario usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."user"
-    ADD CONSTRAINT user_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.usuario
+    ADD CONSTRAINT usuario_pkey PRIMARY KEY (token);
 
 
--- Completed on 2021-07-12 04:51:35 -04
+-- Completed on 2021-07-12 20:59:22 -04
 
 --
 -- PostgreSQL database dump complete

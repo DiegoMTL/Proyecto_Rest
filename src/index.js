@@ -8,6 +8,7 @@ app.use(express.json()); //cada vez que desde una aplicacion cliente envie al se
 app.use(express.urlencoded({extended: false}));
 app.use(cors()); //Utilizacion de cors
 app.use(require('./routes/index'));//routes
+
 app.get('/earthquakes', cors(corsOptions), (req, res) =>{
     res.json({mensaje: 'ok'});
 });
