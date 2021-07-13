@@ -2,6 +2,7 @@ const { Pool } = require('pg');//manera para conectarnos a postgres
 const cheerio = require('cheerio');
 const request = require('request-promise');
 const jwt = require("jsonwebtoken");
+const { next } = require('cheerio/lib/api/traversing');
 
 async function scraping(){
     /*Constantes*/
@@ -63,21 +64,20 @@ const getTerremoto = async (req, res) => {
     });    
 };
 
-const createTerremoto = async (req,res)=>{
-    const {id,fecha,latitud,longitud,profundidad,magnitud,referencia } = req.body;
-    const response = await pool.query('INSERT INTO sismos (id,fecha,latitud,longitud,profundidad,magnitud,referencia) VALUES ($1, $2, $3, $4, $5, $6, $7)',[id,fecha,latitud,longitud,profundidad,magnitud,referencia]);
-    //console.log(req.body); //Datos que una APP client 
-    console.log(response); //impresion por consola
+const createUsuario = async (req,res)=>{
+    const { nombre, apellido } = req.body;
+    const user = { nombre, apellido};
+    const token = jwt.sign({user}, 'postgres'); //token para este usuario para acceder
+    const response = await pool.query('INSERT INTO usuario (nombre,apellido,token) VALUES ($1,$2,$3)',[nombre,apellido,token]); //registro usuario en la base de datos
     res.json({
-        message: 'Sismo añadido satisfactoriamente',
-        body: {
-            terremoto: {fecha,latitud,longitud,profundidad,magnitud,referencia}
-        }
-    })
-    res.send('Post sismos');
+        user,
+        token //impresion del token
+    });
 };
+
 
 module.exports = {
     getTerremoto,
-    createTerremoto
+    createUsuario
+
 }
