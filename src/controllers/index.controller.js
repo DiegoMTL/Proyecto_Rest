@@ -10,7 +10,7 @@ const cron = require('node-cron');
 async function scraping(){
     /*Constantes*/
     const InsertSismo = 'INSERT INTO sismos (fecha,latitud,longitud,profundidad,magnitud,referencia) VALUES ($1, $2, $3, $4, $5, $6)';
-    const valor = 'SELECT EXISTS(SELECT * FROM sismos WHERE fecha= $1 AND latitud= $2 AND longitud= $3 AND profundidad= $4 AND magnitud= $5 AND referencia= $6)';
+    const valor = 'SELECT EXISTS(SELECT * FROM sismos WHERE fecha= $1)';
     const $ = await request({ //aqui tengo todo el documento
         uri: 'http://www.sismologia.cl/links/ultimos_sismos.html',
         transform: body => cheerio.load(body)
@@ -34,7 +34,7 @@ async function scraping(){
                 referencia: ref.html()
             };
             //consulto si los valores leidos estan en la base de datos
-            const exist = await pool.query(valor,[S.fecha,S.latitud,S.longitud,S.profundidad,S.magnitud,S.referencia]);
+            const exist = await pool.query(valor,[S.fecha]);
             if(exist.rows[0].exists != true){ //si el dato no esta, se agrega a la DB
                 console.log("Se agrego un nuevo sismo");
                 pool.query(InsertSismo,[S.fecha,S.latitud,S.longitud,S.profundidad,S.magnitud,S.referencia]);
