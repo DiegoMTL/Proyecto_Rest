@@ -1,14 +1,16 @@
 const { Router } = require('express');
 const router = Router();
 const jwt = require("jsonwebtoken");
-const { getTerremoto,createUsuario } = require('../controllers/index.controller')
+const { getTerremoto,createUsuario, selectID } = require('../controllers/index.controller')
 const { Pool } = require('pg'); //manera para conectarnos a postgres
 
 /*Rutas*/
 router.get('/', (req, res) =>{
     res.json({mensaje: 'Api Rest'});
 });
-router.get('/earthquakes', ensureToken, getTerremoto); //ruta con auth via token
+// router.get('/earthquakes', ensureToken, getTerremoto); //ruta con auth via token
+router.get('/earthquakes', getTerremoto); //ruta con auth via token
+router.get('/earthquakes/:id', selectID); //ruta con auth via token
 router.post('/login',createUsuario);
 
 /* Funcion de autenticacion via token */
