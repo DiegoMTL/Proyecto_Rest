@@ -65,16 +65,17 @@ async function scraping(){
 }
 
 const pool  = new Pool ({
-    host: 'localhost', //servidor de postgress
-    user: 'postgres', //usuario postgress
-    password: 'postgres', //contraseña 
-    database: 'sismos', //nombre de la base de datos
-    port: '5432' //puerto de postgress (se puede definir)
-    // host: 'api.jkd.cl', //servidor de postgress
-    // user: 'grupo_p', //usuario postgress
-    // password: 'VhJCWFJQ', //contraseña 
-    // database: 'grupo_p_db', //nombre de la base de datos
-    // port: '6432' //puerto de postgress (se puede definir)
+    // host: 'localhost', //servidor de postgress
+    // user: 'postgres', //usuario postgress
+    // password: 'postgres', //contraseña 
+    // database: 'sismos', //nombre de la base de datos
+    // port: '5432' //puerto de postgress (se puede definir)
+
+    host: 'api.jkd.cl', //servidor de postgress
+    user: 'grupo_p', //usuario postgress
+    password: 'VhJCWFJQ', //contraseña 
+    database: 'grupo_p_db', //nombre de la base de datos
+    port: '6432' //puerto de postgress (se puede definir)
 });
 /*GET que llama a la funcion scraping y realiza una consulta a la base de datos*/
 const getTerremoto = async (req, res) => {

@@ -12,10 +12,10 @@ app.use(require('./routes/index'));//routes
 app.get('/earthquakes', cors(corsOptions), (req, res) =>{
     res.json({mensaje: 'ok'});
 });
-app.listen(3000);
-console.log('Server on port 3000');
-// app.listen(18088,'https://api.jkd.cl/grupo-p');
-// console.log('Server on port 18088');
+// app.listen(3000);
+// console.log('Server on port 3000');
+app.listen(18088,'https://api.jkd.cl/grupo-p');
+console.log('Server on port 18088');
 
 var whitelist = ['http://www.sismologia.cl/links/ultimos_sismos.html'];
 
