@@ -14,6 +14,7 @@ app.get('/earthquakes', cors(corsOptions), (req, res) =>{
 });
 // app.listen(3000);
 // console.log('Server on port 3000');
+//Conexion a puerto y host asignado
 app.listen(18088,'api.jkd.cl');
 console.log('Server on port 18088');
 
