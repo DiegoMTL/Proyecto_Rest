@@ -5,7 +5,7 @@ const { getTerremoto,createUsuario, selectID } = require('../controllers/index.c
 const { Pool } = require('pg'); //manera para conectarnos a postgres
 
 /*Rutas*/
-router.get('/', (req, res) =>{
+router.get('/grupo-p', (req, res) =>{
     res.json({mensaje: 'Api Rest'});
 });
 // router.get('/earthquakes', ensureToken, getTerremoto); //ruta con auth via token
