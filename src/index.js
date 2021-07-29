@@ -9,7 +9,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(cors()); //Utilizacion de cors
 app.use(require('./routes/index'));//routes
 
-app.get('/earthquakes', cors(corsOptions), (req, res) =>{
+app.get('/grupo-p/earthquakes', cors(corsOptions), (req, res) =>{
     res.json({mensaje: 'ok'});
 });
 // app.listen(3000);

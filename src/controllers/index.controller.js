@@ -99,7 +99,7 @@ const getTerremoto = async (req, res) => {
     // });
     console.log("getSismos");
     await scraping();
-    const SelectT = 'SELECT * FROM sismos';
+    const SelectT = 'SELECT id, fecha, latitud, longitud, profundidad, magnitud, referencia FROM sismos';
     const response = await pool.query(SelectT); //consulta a la base de datos terremotos
     res.json(response.rows);
     cron.schedule("*/30 * * * *", async() => {
@@ -124,7 +124,7 @@ const createUsuario = async (req,res)=>{
 
 const selectID = async (req,res) =>{
     console.log(req.params.id);
-    const response = await pool.query('SELECT id, fecha, latitud, longitud, profundidad, magnitud, referencia, img FROM public.sismos where id='+req.params.id+';');
+    const response = await pool.query('SELECT id, fecha, latitud, longitud, profundidad, magnitud, referencia, img FROM sismos where id='+req.params.id+';');
     res.json(response.rows);
 };
 
