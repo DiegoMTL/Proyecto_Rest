@@ -20,34 +20,12 @@ app.get('/grupo-p/earthquakes', cors(corsOptions), (req, res) =>{
 // app.listen(18088,'api.jkd.cl');
 // console.log('Server on port 18088');
 
-// var options = {
-//     host: 'api.jkd.cl',
-//     port: 18088,
-//     path: '/grupo-p',
-//     method: 'GET'
-// };
-  
-// var req = https.request(options, function(res) {
-//     console.log("statusCode: ", res.statusCode);
-//     console.log("headers: ", res.headers);
-
-//     res.on('data', function(d) {
-//         process.stdout.write(d);
-//     });
-// });
-// req.end();
-
-// req.on('error', function(e) {
-//     console.error(e);
-// });
-
-https.createServer(function(request, response){
-    request.pipe(response);
-
-}).listen(18088, 'api.jkd.cl');
+https.createServer({
+    cert: fs.readFileSync('custom.crt'),
+    key: fs.readFileSync('custom.key')
+  },app).listen(18088, 'api.jkd.cl');
 
 console.log('Server on port 18088 https://api.jkd.cl:18088/grupo-p');
-
 
 var whitelist = ['http://www.sismologia.cl/links/ultimos_sismos.html'];
 
