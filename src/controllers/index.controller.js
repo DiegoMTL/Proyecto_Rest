@@ -99,7 +99,8 @@ const getTerremoto = async (req, res) => {
     // });
     console.log("getSismos");
     await scraping();
-    const SelectT = 'SELECT id, fecha, latitud, longitud, profundidad, magnitud, referencia FROM sismos';
+    //SELECT * FROM grupo_p.sismos ORDER BY id DESC
+    const SelectT = 'SELECT id, fecha, latitud, longitud, profundidad, magnitud, referencia FROM sismos ORDER BY id DESC LIMIT 20';
     const response = await pool.query(SelectT); //consulta a la base de datos terremotos
     res.json(response.rows);
     cron.schedule("*/30 * * * *", async() => {
